@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 
 class VideoWidget extends StatelessWidget {
+  final String? Url;
   const VideoWidget({
     super.key,
-    required this.size,
+    required this.size,required this.Url,
   });
 
   final Size size;
@@ -19,7 +20,7 @@ class VideoWidget extends StatelessWidget {
             image: DecorationImage(
               fit: BoxFit.cover,
               image: NetworkImage(
-                  'https://www.themoviedb.org/t/p/w533_and_h300_bestv2/xHkOKPUe3ioXyPIe5odyL6o6cp4.jpg'),
+                  Url??''),
             ),
           ),
         ),
@@ -32,7 +33,7 @@ class VideoWidget extends StatelessWidget {
               onPressed: () {
                 // TODO
               },
-              icon: Icon(Icons.volume_mute),
+              icon: Icon(Icons.volume_off),
             ),
           ),
         ),

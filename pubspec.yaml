@@ -29,6 +29,7 @@ environment:
 # versions available, run `flutter pub outdated`.
 dependencies:
   bordered_text: ^2.0.0
+  chewie: ^1.7.0
   cupertino_icons: ^1.0.2
   dartz: ^0.10.1
   dio: ^5.3.0
@@ -39,8 +40,10 @@ dependencies:
   get_it: ^7.6.0
   google_fonts: ^5.1.0
   injectable: ^2.1.2
+  intl: ^0.18.1
   json_annotation: ^4.8.1
   json_serializable: ^6.7.1
+
 
   share_plus: ^7.1.0
   video_player: ^2.7.0

@@ -1,6 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:netflix_app/application/Home/bloc/home_bloc_bloc.dart';
+import 'package:netflix_app/application/Hot&New_Bloc/hot_new_bloc.dart';
 import 'package:netflix_app/core/colors/colors.dart';
 
 import 'package:netflix_app/core/constants.dart';
@@ -19,6 +22,7 @@ class ScreenHome extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    context.read<HomeBlocBloc>().add(HomeBlocEvent.started());
     return Scaffold(
         body: ValueListenableBuilder(
       valueListenable: ScrollNotifier,
@@ -37,28 +41,38 @@ class ScreenHome extends StatelessWidget {
           child: SafeArea(
             child: Stack(children: [
               SingleChildScrollView(
-                child: Column(
-                  children: [
-                    BckgroundCard(),
-                    kHeight,
-                    MainTitleCard(
-                      title: 'Released in past year',
-                    ),
-                    kHeight,
-                    MainTitleCard(
-                      title: 'Trending Now',
-                    ),
-                    kHeight,
-                    NumberTitleCard(),
-                    MainTitleCard(
-                      title: 'Tense Drama',
-                    ),
-                    kHeight,
-                    MainTitleCard(
-                      title: 'South Indian Cinema',
-                    ),
-                    kHeight,
-                  ],
+                child: BlocBuilder<HomeBlocBloc, HomeBlocState>(
+                  builder: (context, state) {
+                    return Column(
+                      children: [
+                        BckgroundCard(),
+                        kHeight,
+                        MainTitleCard(
+
+                          
+                          PoaterList: state.HomeMovieList.map((e) =>'https://image.tmdb.org/t/p/w500${e.posterPath}').toList(),
+                          title: 'Released in past year',
+                        ),
+                        kHeight,
+                        MainTitleCard(
+                          PoaterList: state.TrendingList.map((e) =>'https://image.tmdb.org/t/p/w500${e.posterPath}').toList(),
+                          title: 'Trending Now',
+                        ),
+                        kHeight,
+                        NumberTitleCard(),
+                        MainTitleCard(
+                          PoaterList: state.HomeTvList.map((e) => 'https://image.tmdb.org/t/p/w500${e.posterPath}').toList(),
+                          title: 'Tense Drama',
+                        ),
+                        kHeight,
+                        MainTitleCard(
+                            PoaterList: state.HomeMovieList.map((e) =>'https://image.tmdb.org/t/p/w500${e.posterPath}').toList(),
+                          title: 'South Indian Cinema',
+                        ),
+                        kHeight,
+                      ],
+                    );
+                  },
                 ),
               ),
               ScrollNotifier.value == true
@@ -93,7 +107,7 @@ class ScreenHome extends StatelessWidget {
                               )
                             ],
                           ),
-                           Spacer(),
+                          Spacer(),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [

@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 
 class MainCard extends StatelessWidget {
+final String URl;
   const MainCard({
-    super.key,
+    super.key, required this.URl,
   });
 
   @override
@@ -14,7 +15,7 @@ class MainCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(5),
         image: DecorationImage(
             image: NetworkImage(
-                'https://www.themoviedb.org/t/p/w300_and_h450_bestv2/fXgY2RCzoIJPhPDoyKRjaaqjIZs.jpg'),
+                URl),
             fit: BoxFit.cover),
       ),
     );

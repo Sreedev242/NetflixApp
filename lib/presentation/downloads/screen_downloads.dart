@@ -53,6 +53,13 @@ class ScreenDownloads extends StatelessWidget {
               ),
               BlocBuilder<DownloadsBloc, DownloadsState>(
                 builder: (context, state) {
+
+                  if (state.isLoading) {
+                    return Center(child: CircularProgressIndicator(color: Colors.grey,),);
+                  }
+                  if (state.isErrorDown) {
+                    return Center(child: Text('Error occured',style: TextStyle(color: Colors.grey),),);
+                  }
                   return SizedBox(
                     width: size.width,
                     height: size.width,

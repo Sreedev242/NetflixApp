@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
+import 'package:netflix_app/application/Hot&New_Bloc/hot_new_bloc.dart';
 import 'package:netflix_app/core/colors/colors.dart';
 import 'package:netflix_app/core/constants.dart';
+import 'package:netflix_app/core/strings.dart';
 import 'package:netflix_app/presentation/Home/widget/video_widget.dart';
 import 'package:netflix_app/presentation/new&hot/widget/EveryOnesWatchingWidget.dart';
 
@@ -64,8 +68,8 @@ class ScreenNewNHot extends StatelessWidget {
             padding: const EdgeInsets.only(top: 14),
             child: TabBarView(
               children: [
-                buildComingSoon(context),
-                buildEveryonesWatching(context),
+                ComingSoonList(),
+                EeveryOnesWatchingList()
               ],
             ),
           ),
@@ -74,23 +78,110 @@ class ScreenNewNHot extends StatelessWidget {
     );
   }
 
+
+}
+
 // FOLLOWING IS Coming soon Screen
-  buildComingSoon(BuildContext context) {
-    return ListView.builder(
-      itemCount: 5,
-      itemBuilder: (BuildContext, int) {
-        return ComingSoonWidget();
+
+class ComingSoonList extends StatelessWidget {
+  const ComingSoonList({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+ context
+            .read<HotAndNewBloc>()
+            .add(HotAndNewEvent.LoadDataInComingsoon());
+
+    return RefreshIndicator(
+      onRefresh: () async{
+        return context
+            .read<HotAndNewBloc>()
+            .add(HotAndNewEvent.LoadDataInComingsoon());
       },
+      child: BlocBuilder<HotAndNewBloc, HoAndNewState>(
+        builder: (context, state) {
+         
+    
+          if (state.isError) {
+            Center(
+              child: Text('Error Occured',
+                  style: TextStyle(color: Colors.grey, fontSize: 22)),
+            );
+          } else if (state.isLoading) {
+            Center(
+              child:
+                  CircularProgressIndicator(strokeWidth: 2, color: Colors.grey),
+            );
+          }
+          return ListView.builder(
+              itemCount: state.ComingSoonList!.length,
+              itemBuilder: (BuildContext, int) {
+                final _movie=state.ComingSoonList?[int];
+    
+                final _formatedDate=DateFormat.yMMMd().format(DateTime.parse(_movie?.releaseDate??''));
+                  final _weekday=DateFormat.EEEE().format(DateTime.parse(_movie?.releaseDate??''));
+    
+    
+                return ComingSoonWidget(
+    
+                  weekDay: _weekday,
+                    id: _movie?.id.toString(),
+                    month:_formatedDate.split(" ").first,
+                    day: _formatedDate.split(" ").elementAt(1),
+                    poster_path:'https://image.tmdb.org/t/p/w500${ _movie?.posterPath}',
+                    movieName: _movie?.originalTitle,
+                    overview: _movie?.overview);
+              });
+        },
+      ),
     );
   }
+}
 
-  // FOLLOWING IS everyone's watching Screen
-  buildEveryonesWatching(BuildContext context) {
-    final Size x = MediaQuery.of(context).size;
-    return ListView.builder(
-        itemCount: 6,
-        itemBuilder: (BuildContext, int) {
-          return EveryOnesWatchingWidget(x: x);
-        });
+class EeveryOnesWatchingList extends StatelessWidget {
+  const EeveryOnesWatchingList({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+ context.read<HotAndNewBloc>().add(HotAndNewEvent.LoadDataInEveryonesWatching());
+            
+            
+            final Size x = MediaQuery.of(context).size;
+
+    return RefreshIndicator(
+      onRefresh: ()async {
+        return context.read<HotAndNewBloc>().add(HotAndNewEvent.LoadDataInEveryonesWatching());
+      },
+      child: BlocBuilder<HotAndNewBloc, HoAndNewState>(
+        builder: (context, state) {
+         
+    
+          if (state.isError) {
+            Center(
+              child: Text('Error Occured',
+                  style: TextStyle(color: Colors.grey, fontSize: 22)),
+            );
+          } else if (state.isLoading) {
+            Center(
+              child:
+                  CircularProgressIndicator(strokeWidth: 2, color: Colors.grey),
+            );
+          }
+          return ListView.builder(
+              itemCount: state.EeveryOnesWatchingList!.length,
+              itemBuilder: (BuildContext, index) {
+                final _movie=state.EeveryOnesWatchingList?[index];
+    
+    
+                return EveryOnesWatchingWidget(
+                    x:x ,
+                    ShereLink: _movie!.posterPath?[index],
+                    poster_path:'https://image.tmdb.org/t/p/w500${ _movie?.posterPath}',
+                    movieName: _movie?.originaltvName,
+                    overview: _movie?.overview);
+              });
+        },
+      ),
+    );
   }
 }

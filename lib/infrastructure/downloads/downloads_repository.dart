@@ -23,7 +23,7 @@ class DownloadsRepo implements iDownloadsRepo {
         final List<Downloads> downloadsList = (response.data['results'] as List)
             .map((e) => Downloads.fromJson(e))
             .toList();
-    print(downloadsList);
+    // print(downloadsList);
         return Right(downloadsList);
       } else {
         return Left(MainFailure.ClientFailure());

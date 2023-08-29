@@ -5,8 +5,22 @@ import '../../../core/constants.dart';
 import '../../Home/widget/video_widget.dart';
 
 class ComingSoonWidget extends StatelessWidget {
+  final String? weekDay;
+  final String? id;
+  final String? month;
+  final String? day;
+  final String? poster_path;
+  final String? movieName;
+  final String? overview;
   const ComingSoonWidget({
     super.key,
+   required this.id,
+   required this.month,
+   required this.day,
+   required this.poster_path,
+   required this.movieName,
+   required this.overview, 
+   required this.weekDay,
   });
 
   @override
@@ -21,7 +35,7 @@ class ComingSoonWidget extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Text(
-                'Feb\n 11',
+                '$month\n$day',
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
               ),
             ],
@@ -33,18 +47,22 @@ class ComingSoonWidget extends StatelessWidget {
             height: 440,
             child: Column(
               children: [
-                VideoWidget(size: size),
+                VideoWidget(size: size,
+                 Url:poster_path,),
                 SizedBox(
                   height: 4,
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
-                      'Movie Name',
-                      style: TextStyle(
-                        fontSize: 26,
-                        letterSpacing: -2,
+                    Expanded(
+                      child: Text(maxLines:1,
+                      overflow:TextOverflow.clip,
+                        '$movieName ',
+                        style: TextStyle(
+                          fontSize: 26,
+                          letterSpacing: -2,
+                        ),
                       ),
                     ),
                     Align(
@@ -56,7 +74,7 @@ class ComingSoonWidget extends StatelessWidget {
                               IconButton(
                                 onPressed: () {},
                                 icon: Icon(
-                                  Icons.notifications,
+                                  Icons.notifications_outlined,
                                   color: ButtonColorWhite,
                                   size: 18,
                                 ),
@@ -88,21 +106,25 @@ class ComingSoonWidget extends StatelessWidget {
                 kHeight,
                 Align(
                   alignment: Alignment.bottomLeft,
-                  child: Text('Coming on Friday'),
+
+
+                  child: Text('Coming on ${weekDay}'),
                 ),
                 kHeight,
                 Align(
                   alignment: Alignment.bottomLeft,
                   child: Text(
-                    'Movie Name',
+                    '$movieName',
                     style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
                   ),
                 ),
                 kHeight,
                 Align(
                   alignment: Alignment.bottomLeft,
-                  child: Text(
-                    'hifhaishfo iafiha ihjihj iaifhoa ihaioh oaihsf  haoih foaihfaoih foaih sfdoiah foaihdfoihaoshidfoihasoidhoahosihdohaoihd ',
+                  child: Text(            
+                     maxLines:3,
+                    '$overview',
+                    overflow: TextOverflow.clip,
                     style: TextStyle(color: Colors.grey),
                   ),
                 )

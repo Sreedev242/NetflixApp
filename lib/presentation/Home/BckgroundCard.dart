@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:netflix_app/presentation/fast_laughs/screen_fast_laugh.dart';
 
 import '../../core/colors/colors.dart';
 import '../../core/constants.dart';
@@ -44,7 +45,11 @@ class BckgroundCard extends StatelessWidget {
                 ],
               ),
               ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.of(context).push(MaterialPageRoute(builder:(context){
+                    return ScreenFastLaughs();
+                  }));
+                },
                 child: Row(
                   children: [
                     Icon(
