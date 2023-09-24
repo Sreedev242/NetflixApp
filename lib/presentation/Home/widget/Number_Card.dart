@@ -20,8 +20,8 @@ class Number_Card extends StatelessWidget {
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(5),
               image: DecorationImage(
-                  image: NetworkImage(
-                      'https://www.themoviedb.org/t/p/w300_and_h450_bestv2/fXgY2RCzoIJPhPDoyKRjaaqjIZs.jpg'),
+                  image: AssetImage(
+                      'images/BackgroundImage.jpg'),
                   fit: BoxFit.cover),
             ),
           ),

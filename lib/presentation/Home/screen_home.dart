@@ -85,8 +85,8 @@ class ScreenHome extends StatelessWidget {
                         children: [
                           Row(
                             children: [
-                              Image.network(
-                                'https://blog.ventunotech.com/wp-content/uploads/2022/06/netflix-logo-circle-png-5.png',
+                             Image.asset(
+                                'images/logo.png',
                                 width: 40,
                                 height: 40,
                               ),
